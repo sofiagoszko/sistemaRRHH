@@ -1,6 +1,6 @@
 # Sistema de gestión de Recursos Humanos
 
-Aplicación para la gestión de empleados junto con sus operaciones CRUD (create, read, updare y delete).
+Aplicación para la gestión de empleados junto con sus operaciones CRUD (create, read, update y delete).
 
 ## Tecnologías Utilizadas
 Este proyecto utiliza las siguientes tecnologías:
