@@ -7,10 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class EmpleadoControlador {
     public ResponseEntity<Empleado> getEmpleadoPorId(@PathVariable Long id){
         Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
         if (empleado == null) {
-            throw new RecursoNoEncontradoExcepcion("No se encontro el empleado con el id " + id);
+            throw new RecursoNoEncontradoExcepcion("No se encontró el empleado con el id " + id);
         }
         return ResponseEntity.ok(empleado);
 
@@ -61,7 +60,7 @@ public class EmpleadoControlador {
 
         Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
         if (empleado == null) {
-            throw new RecursoNoEncontradoExcepcion("No se encontro el empleado con el id " + id);
+            throw new RecursoNoEncontradoExcepcion("No se encontró el empleado con el id " + id);
         }
 
         if (empleadoModificado.getNombre() != null) {
@@ -77,6 +76,19 @@ public class EmpleadoControlador {
         Empleado empleadoActualizado = empleadoServicio.guardarEmpleado(empleado);
 
         return ResponseEntity.ok(empleadoActualizado);
+    }
+
+    @DeleteMapping("/empleados/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteEmpleado(@PathVariable Long id) {
+
+        Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
+        if (empleado == null) {
+            throw new RecursoNoEncontradoExcepcion("No se encontró el empleado con el id " + id);
+        }
+        empleadoServicio.eliminarEmpleado(empleado);
+        Map<String, Boolean> respuesta = new HashMap<>();
+        respuesta.put("Eliminado", Boolean.TRUE);
+        return ResponseEntity.ok(respuesta);
     }
 
 
