@@ -57,20 +57,22 @@ public class EmpleadoControlador {
     @PatchMapping("/empleados/{id}")
     public ResponseEntity<Empleado> updateEmpleado(
             @PathVariable Long id,
-            @RequestBody Map<String, Object> updates) {
+            @RequestBody Empleado empleadoModificado) {
 
         Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
         if (empleado == null) {
-            return ResponseEntity.notFound().build();
+            throw new RecursoNoEncontradoExcepcion("No se encontro el empleado con el id " + id);
         }
 
-        updates.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(Empleado.class, key);
-            if (field != null) {
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, empleado, value);
-            }
-        });
+        if (empleadoModificado.getNombre() != null) {
+            empleado.setNombre(empleadoModificado.getNombre());
+        }
+        if (empleadoModificado.getDepartamento() != null) {
+            empleado.setDepartamento(empleadoModificado.getDepartamento());
+        }
+        if (empleadoModificado.getSalario() != null) {
+            empleado.setSalario(empleadoModificado.getSalario());
+        }
 
         Empleado empleadoActualizado = empleadoServicio.guardarEmpleado(empleado);
 
