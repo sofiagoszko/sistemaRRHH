@@ -1,5 +1,6 @@
 package com.rrhh.controlador;
 
+import com.rrhh.excepcion.RecursoNoEncontradoExcepcion;
 import com.rrhh.modelo.Empleado;
 import com.rrhh.servicio.IEmpleadoServicio;
 import org.slf4j.Logger;
@@ -33,6 +34,16 @@ public class EmpleadoControlador {
         List<Empleado> empleados = empleadoServicio.listarEmpleados();
         empleados.forEach(empleado -> logger.info(empleado.toString()));
         return empleados;
+    }
+
+    @GetMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> getEmpleadoPorId(@PathVariable Long id){
+        Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
+        if (empleado == null) {
+            throw new RecursoNoEncontradoExcepcion("No se encontro el empleado con el id " + id);
+        }
+        return ResponseEntity.ok(empleado);
+
     }
 
     @PostMapping("/empleados")
