@@ -1,11 +1,15 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-export default function AgregarEmpleado() {
+export default function EditarEmpleado() {
+
+    const urlBase = "http://localhost:8080/rrhh/empleados"
 
     let navegacion = useNavigate();
+
+    const {id} =useParams();
 
     const[empleado, setEmpleado]=useState({
         nombre:"",
@@ -15,20 +19,30 @@ export default function AgregarEmpleado() {
         
     const{nombre, departamento, salario}=empleado
 
+    useEffect(()=>{
+        cargarEmpleado()
+    }, []) 
+
+    const cargarEmpleado = async () =>{
+        const resultado = await axios.get(`${urlBase}/${id}`)
+        setEmpleado(resultado.data)
+    }
+
+
     const onInputChange = (e)=>{
         setEmpleado({...empleado, [e.target.name]: e.target.value})
     }
 
     const onSubmit = async(e)=>{
         e.preventDefault()
-        const urlBase = "http://localhost:8080/rrhh/empleados"
+    
 
         try {
-            await axios.post(urlBase, empleado);
+            await axios.patch(`${urlBase}/${id}`, empleado);
             Swal.fire({
                 icon: "success",
                 title: "Éxito",
-                text: "¡Empleado agregado con éxito!",
+                text: "¡Empleado modificado con éxito!",
             }).then(() => {
                 navegacion("/");
             });
@@ -37,7 +51,7 @@ export default function AgregarEmpleado() {
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Hubo un error al agregar el empleado",
+                text: "Hubo un error al editar el empleado",
             });
         }
     }
@@ -46,7 +60,7 @@ export default function AgregarEmpleado() {
     return (
         <div className="container">
             <div className="container text-center" style={{margin: "30px"}}>
-                <h3>Agregar Empleado</h3>
+                <h3>Editar Empleado</h3>
             </div>
             <form onSubmit={(e)=>onSubmit(e)}>
                 <div className="mb-3">
@@ -62,7 +76,7 @@ export default function AgregarEmpleado() {
                     <input type="number" step="any" className="form-control" id="salario" name="salario" required={true} value={salario} onChange={(e)=>onInputChange(e)}/>
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="btn btn-success btn-sm me-3">Agregar</button>
+                    <button type="submit" className="btn btn-success btn-sm me-3">Guardar</button>
                     <a href="/" className="btn btn-danger btn-sm">Cancelar</a>
                 </div>
             </form>
