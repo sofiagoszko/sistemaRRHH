@@ -19,7 +19,7 @@ export default function ListadoEmpleados() {
     }
 
     return (
-        <div className='container'> 
+        <div className="container"> 
             <div className="container text-center" style={{margin: "30px"}}> 
                 <h3>Sistema de Recursos Humanos</h3>
             </div>
@@ -41,9 +41,9 @@ export default function ListadoEmpleados() {
                             <td>{empleado.nombre}</td>
                             <td>{empleado.departamento}</td>
                             <td><NumericFormat value={empleado.salario}
-                                displayType={'text'}
-                                thousandSeparator=','
-                                prefix={'$'}
+                                displayType={"text"}
+                                thousandSeparator=","
+                                prefix={"$"}
                                 decimalScale={2} fixedDecimalScale/>
                             </td>
                             </tr>

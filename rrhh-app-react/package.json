@@ -14,7 +14,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-number-format": "^5.4.3",
-    "rrhh-app-react": "file:"
+    "react-router-dom": "^7.1.1",
+    "rrhh-app-react": "file:",
+    "sweetalert2": "^11.15.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
