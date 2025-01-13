@@ -36,9 +36,10 @@ public class EmpleadoControlador {
     }
 
     @PostMapping("/empleados")
-    public Empleado addEmpleado(@RequestBody Empleado empleado){
+    public ResponseEntity<Empleado> addEmpleado(@RequestBody Empleado empleado){
         logger.info("Empleado a agregar: " + empleado.toString());
-        return empleadoServicio.guardarEmpleado(empleado);
+        empleadoServicio.guardarEmpleado(empleado);
+        return ResponseEntity.ok(empleado);
     }
 
 
