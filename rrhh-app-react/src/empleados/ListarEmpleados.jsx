@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { NumericFormat } from 'react-number-format';
 import { Link } from 'react-router-dom';
 
-export default function ListadoEmpleados() {
+export default function ListarEmpleados() {
 
     const urlBase = "http://localhost:8080/rrhh/empleados"
     const[empleados, setEmpleados] = useState([])
