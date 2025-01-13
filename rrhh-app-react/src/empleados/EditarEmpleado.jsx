@@ -59,7 +59,7 @@ export default function EditarEmpleado() {
 
     return (
         <div className="container">
-            <div className="container text-center" style={{margin: "30px"}}>
+            <div className="container text-center">
                 <h3>Editar Empleado</h3>
             </div>
             <form onSubmit={(e)=>onSubmit(e)}>
